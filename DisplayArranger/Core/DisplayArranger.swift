@@ -9,13 +9,6 @@
 import Foundation
 
 final class DisplayArranger {
-    private(set) var mainId: DisplayId?
-    private(set) var screenPositions: [DisplayId: ScreenPosition]?
-
-    func reset() {
-        mainId = nil
-        screenPositions = nil
-    }
 
     func output(item: OutputItem) {
         let output: String?

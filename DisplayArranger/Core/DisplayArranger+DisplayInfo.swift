@@ -14,4 +14,8 @@ extension DisplayArranger {
         return NSScreen.screens
             .flatMap(DisplayInfo.init)
     }
+
+    func info(for displayId: Int) -> DisplayInfo? {
+        return displaysInfo().first(where: { $0.id == UInt32(displayId) })
+    }
 }

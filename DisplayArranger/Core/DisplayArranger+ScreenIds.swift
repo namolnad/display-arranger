@@ -10,7 +10,7 @@ import Foundation
 
 extension DisplayArranger {
 
-    func screenIds() throws -> [DisplayId] {
+    func screenIds() throws -> Set<DisplayId> {
         var displayCount: CGDisplayCount = .init()
 
         CGGetActiveDisplayList(.max, nil, &displayCount)
@@ -21,7 +21,7 @@ extension DisplayArranger {
         case let result where result != .success:
             throw DisplayArrangerError.unavailable
         default:
-            return activeDisplays.array
+            return Set(activeDisplays.array)
         }
     }
 }

@@ -14,6 +14,25 @@ struct ScreenPosition {
 
     let vertical: Vertical
 
+    init(_ value: String) throws {
+        let position: ScreenPosition
+        switch value.components(separatedBy: "-") {
+        case let values where values.count == 2:
+            guard
+                let horizontal = Horizontal(rawValue: values[0]),
+                let vertical = Vertical(rawValue: values[1]) else {
+                throw DisplayArrangerError.malformedScreenPosition
+            }
+            position = .init(horizontal: horizontal, vertical: vertical)
+            guard ScreenPosition.supportedPositions.contains(position) else {
+                throw DisplayArrangerError.unsupportedScreenPosition
+            }
+        default:
+            throw DisplayArrangerError.malformedScreenPosition
+        }
+        self.init(horizontal: position.horizontal, vertical: position.vertical)
+    }
+
     private init(horizontal: Horizontal, vertical: Vertical) {
         self.horizontal = horizontal
         self.vertical = vertical
@@ -30,16 +49,16 @@ struct ScreenPosition {
     enum Vertical: String {
         case above
         case below
+        case centered
         case bottomAligned
         case topAligned
-        case centerAligned
     }
 
-    func frame(with size: CGSize, relativeTo other: CGRect) -> CGRect {
+    func origin(with size: CGSize, relativeTo other: CGRect) -> CGPoint {
         let xOrigin: CGFloat = horizontal.origin(size: size, relativeTo: other)
         let yOrigin: CGFloat = vertical.origin(size: size, relativeTo: other)
 
-        return .init(origin: .init(x: xOrigin, y: yOrigin), size: size)
+        return .init(x: xOrigin, y: yOrigin)
     }
 }
 
@@ -67,10 +86,10 @@ extension ScreenPosition.Vertical {
             return other.origin.y - size.height
         case .below:
             return other.maxY
+        case .centered:
+            return (other.minY + (other.size.height / 2)) - (size.height / 2)
         case .bottomAligned:
             return other.maxY - size.height
-        case .centerAligned:
-            return (other.minY + (other.size.height / 2)) - (size.height / 2)
         case .topAligned:
             return other.minY
         }

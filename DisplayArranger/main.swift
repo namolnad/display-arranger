@@ -19,22 +19,26 @@ case let args where args[1] == "-info":
 case let args where args[1] == "-screenIds":
     arranger.output(item: .screenIds)
 case let args where args[1] == "-setMainId":
-    guard let mainId = arranger.mainId else {
-        fatalError("No mainId set")
+    guard let mainId = UInt32(args[2]) else {
+        fatalError("No mainId argument")
     }
-    guard let screenPositions = arranger.screenPositions else {
-        fatalError("Missing starting position argument")
+    guard args[3] == "-otherPosition" else {
+        fatalError("Invalid argument order")
     }
+
     do {
-        try arranger.setAsMainDisplay(id: mainId, otherPositions: screenPositions)
+        // FIXME: need to figure out parsing for > 2 displays
+        guard case let ids = try arranger.screenIds(), ids.count == 2 else {
+            throw DisplayArrangerError.tooManyScreens
+        }
+        guard let other = ids.subtracting([mainId]).first else {
+            throw DisplayArrangerError.screenPositionParsing
+        }
+        let position: ScreenPosition = try .init(args[4])
+        try arranger.setAsMainDisplay(id: mainId, otherPositions: [other: position])
     } catch {
         print(error.localizedDescription)
     }
 default:
     arranger.output(item: .undefined)
 }
-
-//} else if ([[pInfo objectAtIndex:1] isEqualToString:@"-setMainID"]) {
-//    NSString* screenID = [[NSUserDefaults standardUserDefaults] stringForKey:@"setMainID"];
-//    NSString* othersStartingPosition = [[NSUserDefaults standardUserDefaults] stringForKey:@"othersStartingPosition"];
-//    setMainScreen(screenID, othersStartingPosition);

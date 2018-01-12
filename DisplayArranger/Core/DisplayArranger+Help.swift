@@ -11,6 +11,7 @@ import Foundation
 extension DisplayArranger {
 
     func help() -> String {
+        // FIXME: - adjust usage documentation to show new positioning logic
         return """
         Use display-arranger to either get information about your screens
         or for setting the main screen (the screen with the menu bar).
