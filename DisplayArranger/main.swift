@@ -41,6 +41,16 @@ case let args where args[1] == "-setMainId":
             print(error)
         }
     }
+case let args where args[1] == "-moveMouse":
+    guard case let position = args[2].components(separatedBy: "-").flatMap(Int.init), position.count == 2 else {
+        print("Error error error")
+        break
+    }
+    guard let mainId = arranger.displaysInfo().first?.id else {
+        print("Error error errrrrrror")
+        break
+    }
+    arranger.moveCursor(to: .init(x: position[0], y: position[1]), onScreen: mainId)
 default:
     arranger.output(item: .undefined)
 }

@@ -30,4 +30,10 @@ final class DisplayArranger {
 
         print(output)
     }
+
+    func moveCursor(to: CGPoint, onScreen id: DisplayId) {
+        if case let status = CGDisplayMoveCursorToPoint(id, to), status != .success {
+            print("Error: \(status.rawValue)")
+        }
+    }
 }
