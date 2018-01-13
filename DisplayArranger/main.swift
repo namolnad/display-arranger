@@ -11,6 +11,7 @@ import Foundation
 
 let arranger: DisplayArranger = .init()
 
+// FIXME: - Create argument parser object
 switch ProcessInfo().arguments {
 case let args where args.count == 1, let args where args[1] == "-h":
     arranger.output(item: .help)
@@ -43,11 +44,11 @@ case let args where args[1] == "-setMainId":
     }
 case let args where args[1] == "-moveMouse":
     guard case let position = args[2].components(separatedBy: "-").flatMap(Int.init), position.count == 2 else {
-        print("Error error error")
+        print("Unable to parse mouse coordinates")
         break
     }
     guard let mainId = arranger.displaysInfo().first?.id else {
-        print("Error error errrrrrror")
+        print("Main id unavailable")
         break
     }
     arranger.moveCursor(to: .init(x: position[0], y: position[1]), onScreen: mainId)
