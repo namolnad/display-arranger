@@ -24,7 +24,8 @@ case let args where args[1] == "-setMainId":
         fatalError("No mainId argument")
     }
     guard args[3] == "-otherPosition" else {
-        fatalError("Invalid argument order")
+        arranger.setAsMainDisplay(id: mainId)
+        break
     }
 
     do {
