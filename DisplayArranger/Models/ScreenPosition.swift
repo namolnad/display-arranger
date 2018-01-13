@@ -100,8 +100,14 @@ extension ScreenPosition {
     static var supportedPositions: Set<ScreenPosition> = [
         onLeftTopAligned,
         onLeftBottomAligned,
+        onLeftBelow,
+        onLeftAbove,
+        onLeftCentered,
         onRightTopAligned,
         onRightBottomAligned,
+        onRightBelow,
+        onRightAbove,
+        onRightCentered,
         aboveLeftAligned,
         aboveCentered,
         aboveRightAligned,
@@ -113,12 +119,16 @@ extension ScreenPosition {
     // On left
     private static let onLeftTopAligned: ScreenPosition = .init(horizontal: .onLeft, vertical: .topAligned)
     private static let onLeftBottomAligned: ScreenPosition = .init(horizontal: .onLeft, vertical: .bottomAligned)
-//    private static let onLeftAbove: ScreenPosition = .init(horizontal: .onLeft, vertical: .above)
-//    private static let onLeftBelow: ScreenPosition = .init(horizontal: .onLeft, vertical: .below)
+    private static let onLeftAbove: ScreenPosition = .init(horizontal: .onLeft, vertical: .above)
+    private static let onLeftBelow: ScreenPosition = .init(horizontal: .onLeft, vertical: .below)
+    private static let onLeftCentered: ScreenPosition = .init(horizontal: .onLeft, vertical: .centered)
 
     // On right
     private static let onRightTopAligned: ScreenPosition = .init(horizontal: .onRight, vertical: .topAligned)
     private static let onRightBottomAligned: ScreenPosition = .init(horizontal: .onRight, vertical: .bottomAligned)
+    private static let onRightAbove: ScreenPosition = .init(horizontal: .onRight, vertical: .above)
+    private static let onRightBelow: ScreenPosition = .init(horizontal: .onRight, vertical: .below)
+    private static let onRightCentered: ScreenPosition = .init(horizontal: .onRight, vertical: .centered)
 
     // Above
     private static let aboveLeftAligned: ScreenPosition = .init(horizontal: .leftAligned, vertical: .above)
