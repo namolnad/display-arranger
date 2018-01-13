@@ -27,44 +27,44 @@ extension ScreenPosition {
 }
 
 extension ScreenPosition.Horizontal {
-    func origin(size: CGSize, relativeTo other: CGRect) -> CGFloat {
+    func origin(size: CGSize, relativeTo reference: CGRect) -> CGFloat {
         switch self {
         case .centered:
-            return (other.minX + (other.size.width / 2)) - (size.width / 2)
+            return reference.midX - (size.width / 2)
         case .leftAligned:
-            return other.minX
+            return reference.minX
         case .rightAligned:
-            return other.maxX - size.width
+            return reference.maxX - size.width
         case .onLeft:
-            return other.minX - size.width
+            return reference.minX - size.width
         case .onRight:
-            return other.maxX
+            return reference.maxX
         }
     }
 }
 
 extension ScreenPosition.Vertical {
-    func origin(size: CGSize, relativeTo other: CGRect) -> CGFloat {
+    func origin(size: CGSize, relativeTo reference: CGRect) -> CGFloat {
         switch self {
         case .above:
-            return other.origin.y - size.height
+            return reference.maxY
         case .below:
-            return other.maxY
+            return reference.origin.y - size.height
         case .centered:
-            return (other.minY + (other.size.height / 2)) - (size.height / 2)
+            return reference.midY - (size.height / 2)
         case .bottomAligned:
-            return other.maxY - size.height
+            return reference.minY
         case .topAligned:
-            return other.minY
+            return reference.maxY - size.height
         }
     }
 }
 
 extension ScreenPosition {
-    func origin(with size: CGSize, relativeTo other: CGRect) -> CGPoint {
+    func origin(with size: CGSize, relativeTo reference: CGRect) -> CGPoint {
         return .init(
-            x: horizontal.origin(size: size, relativeTo: other),
-            y: vertical.origin(size: size, relativeTo: other)
+            x: horizontal.origin(size: size, relativeTo: reference),
+            y: vertical.origin(size: size, relativeTo: reference)
         )
     }
 }
