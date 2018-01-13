@@ -19,9 +19,9 @@ case let args where args[1] == "-info":
     arranger.output(item: .displaysInfo)
 case let args where args[1] == "-screenIds":
     arranger.output(item: .screenIds)
-case let args where args[1] == "-setMainId":
+case let args where args[1] == "-setMain":
     guard let mainId = UInt32(args[2]) else {
-        fatalError("No mainId argument")
+        fatalError("No main id argument")
     }
     guard args[3] == "-otherPosition" else {
         arranger.setAsMainDisplay(id: mainId)
