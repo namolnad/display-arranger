@@ -47,7 +47,7 @@ struct DisplayInfo {
 
 extension DisplayInfo: CustomStringConvertible {
     var description: String {
-        var buffer: String = "Screen Id: \(id)\n"
+        var buffer: String = "ScreenId: \(id)\n"
 
         buffer.append("Global Position: \(globalPosition)\n")
 
