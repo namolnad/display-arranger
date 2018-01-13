@@ -68,13 +68,13 @@ extension ScreenPosition.Horizontal {
         case .centered:
             return (other.minX + (other.size.width / 2)) - (size.width / 2)
         case .leftAligned:
-            return other.minY
+            return other.minX
         case .rightAligned:
-            return other.maxY - size.width
+            return other.maxX - size.width
         case .onLeft:
-            return other.minY - size.width
+            return other.minX - size.width
         case .onRight:
-            return other.maxY
+            return other.maxX
         }
     }
 }
