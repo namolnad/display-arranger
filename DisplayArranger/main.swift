@@ -53,6 +53,9 @@ case let args where args[1] == "-moveMouse":
         break
     }
     arranger.moveCursor(to: .init(x: position[0], y: position[1]), onScreen: mainId)
-default:
-    arranger.output(item: .undefined)
+case let args:
+    let input = Array(args.dropFirst())
+        .reduce("", { $0 + "\n\($1)" })
+
+    arranger.output(item: .undefined(input))
 }

@@ -12,5 +12,5 @@ enum OutputItem {
     case help
     case displaysInfo
     case screenIds
-    case undefined
+    case undefined(String)
 }

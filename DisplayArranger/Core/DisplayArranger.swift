@@ -17,8 +17,8 @@ final class DisplayArranger {
             switch item {
             case .help:
                 output = help()
-            case .undefined:
-                output = undefined()
+            case .undefined(let undefinedArgument):
+                output = "Input: \(undefinedArgument)\n" + undefined()
             case .displaysInfo:
                 output = displaysInfo().reduce("\n") { $0 + "\($1.description)\n" }
             case .screenIds:
