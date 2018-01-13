@@ -47,15 +47,15 @@ extension ScreenPosition.Vertical {
     func origin(size: CGSize, relativeTo reference: CGRect) -> CGFloat {
         switch self {
         case .above:
-            return reference.maxY
+            return reference.minY - size.height
         case .below:
-            return reference.origin.y - size.height
+            return reference.maxY
         case .centered:
             return reference.midY - (size.height / 2)
         case .bottomAligned:
-            return reference.minY
-        case .topAligned:
             return reference.maxY - size.height
+        case .topAligned:
+            return reference.minY
         }
     }
 }
