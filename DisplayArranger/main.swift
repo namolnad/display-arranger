@@ -12,7 +12,7 @@ import Foundation
 let arranger: DisplayArranger = .init()
 
 switch ProcessInfo().arguments {
-case let args where args.count == 1, let args where args.first == "-h":
+case let args where args.count == 1, let args where args[1] == "-h":
     arranger.output(item: .help)
 case let args where args[1] == "-info":
     arranger.output(item: .displaysInfo)
@@ -28,7 +28,7 @@ case let args where args[1] == "-setMainId":
 
     do {
         // FIXME: need to figure out parsing for > 2 displays
-        guard case let ids = try arranger.screenIds(), ids.count == 2 else {
+        guard case let ids = try arranger.screenIds(), ids.count <= 2 else {
             throw DisplayArrangerError.tooManyScreens
         }
         guard let other = ids.subtracting([mainId]).first else {
@@ -37,7 +37,11 @@ case let args where args[1] == "-setMainId":
         let position: ScreenPosition = try .init(args[4])
         try arranger.setAsMainDisplay(id: mainId, otherPositions: [other: position])
     } catch {
-        print(error.localizedDescription)
+        if let error = error as? DisplayArrangerError, let desc = error.localizedDescription {
+            print(desc)
+        } else {
+            print(error)
+        }
     }
 default:
     arranger.output(item: .undefined)

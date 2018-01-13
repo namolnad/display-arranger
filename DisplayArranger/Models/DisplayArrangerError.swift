@@ -27,7 +27,7 @@ enum DisplayArrangerError: LocalizedError {
         case .unsupportedScreenPosition:
             description = "Screen position not currently supported"
         case .screenPositionParsing:
-            description = "Unable to determine screen position. See -h for examples"
+            description = "Unable to determine screen position; Ensure multiple screens connected. See -h for examples"
         }
         return "Error: \(description)"
     }

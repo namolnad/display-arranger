@@ -11,7 +11,7 @@ import Foundation
 final class DisplayArranger {
 
     func output(item: OutputItem) {
-        let output: String?
+        let output: String
 
         do {
             switch item {
@@ -28,8 +28,6 @@ final class DisplayArranger {
             output = error.localizedDescription
         }
 
-        if let output = output {
-            print(output)
-        }
+        print(output)
     }
 }

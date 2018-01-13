@@ -28,11 +28,16 @@ extension DisplayArranger {
 
         let pointer: Pointer<CGDisplayConfigRef?> = .init(capacity: 1)
 
-        let config = pointer[0]
+        var config: CGDisplayConfigRef? = .init(pointer.pointer)
 
-        CGBeginDisplayConfiguration(pointer.pointer)
 
-        CGConfigureDisplayOrigin(config, id, 0, 0)
+        if case let status = CGBeginDisplayConfiguration(&config), status != .success {
+            print("Error: \(status.rawValue)")
+        }
+
+        if case let status = CGConfigureDisplayOrigin(config, id, 0, 0), status != .success {
+            print("Error: \(status.rawValue)")
+        }
 
         // FIXME: - should probably return a dictionary here
         let screenInfo = displaysInfo()
@@ -46,9 +51,13 @@ extension DisplayArranger {
                 fatalError("Unable to find screen info for id: \(screenId)")
             }
             let origin = position.origin(with: info.frame.size, relativeTo: mainInfo.frame)
-            CGConfigureDisplayOrigin(config, screenId, Int32(origin.x), Int32(origin.y))
+            if case let status = CGConfigureDisplayOrigin(config, screenId, Int32(origin.x), Int32(origin.y)), status != .success {
+                print("Error: \(status.rawValue)")
+            }
         }
 
-        CGCompleteDisplayConfiguration(config, .forSession)
+        if case let status = CGCompleteDisplayConfiguration(config, .permanently), status != .success {
+            print("Error: \(status.rawValue)")
+        }
     }
 }
