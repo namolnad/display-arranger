@@ -13,9 +13,10 @@ extension DisplayArranger {
     func help() -> String {
         // FIXME: - adjust usage documentation to show new positioning logic
         return """
-        Use display-arranger to get information about your current screens
-        or for setting the main screen and the positions of your other
-        connected screens, relative to the main screen.
+
+        Use display-arranger to get information about your current displays,
+        for setting the main screen, and for setting the positions of your other
+        connected screens (relative to the main-screen's position.)
 
         Usage: display-arranger
         [-h] Shows the help text
@@ -24,6 +25,7 @@ extension DisplayArranger {
         [-setMainId <Screen Id>] Pass the id of the screen that you want to make the main screen
         [-otherPosition <position>] Use this with -setMainID to determine placement of other screens
         [-allowablePositions] Displays a list of the allowable positions for -otherPosition command
+        [-moveMouse] Moves the mouse cursor to the given coordinates on the main screen (example: 100-100)
 
 
         Examples:
