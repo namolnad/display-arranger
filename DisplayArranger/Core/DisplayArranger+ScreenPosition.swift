@@ -10,7 +10,7 @@ import Foundation
 
 extension DisplayArranger {
 
-    func setAsMainDisplay(id: DisplayId, otherPositions: [DisplayId: ScreenPosition]? = nil) {
+    func setAsMainDisplay(id: DisplayId, otherPositions positions: [DisplayId: ScreenPosition]? = nil) {
         let pointer: Pointer<CGDisplayConfigRef?> = .init(capacity: 1)
 
         var config: CGDisplayConfigRef? = .init(pointer.pointer)
@@ -26,14 +26,14 @@ extension DisplayArranger {
             print("Successfully set display with id: \(id) as main display")
         }
 
-        if let others = otherPositions, let referenceFrame = displayInfo(for: id)?.frame {
-            setPostions(for: others, relativeTo: referenceFrame, config: config)
+        if let positions = positions, let referenceFrame = displayInfo(for: id)?.frame {
+            setFrames(for: positions, relativeTo: referenceFrame, config: config)
         } else if case let status = CGCompleteDisplayConfiguration(config, .permanently), status != .success {
             print("Error: \(status.rawValue)")
         }
     }
 
-    func setPostions(for otherPositions: [DisplayId: ScreenPosition], relativeTo other: CGRect, config: CGDisplayConfigRef? = nil) {
+    func setFrames(for positions: [DisplayId: ScreenPosition], relativeTo other: CGRect, config: CGDisplayConfigRef? = nil) {
         let pointer: Pointer<CGDisplayConfigRef?> = .init(capacity: 1)
 
         var positionsConfig: CGDisplayConfigRef? = config ?? .init(pointer.pointer)
@@ -42,7 +42,7 @@ extension DisplayArranger {
             print("Error: \(status.rawValue)")
         }
 
-        for (screenId, position) in otherPositions {
+        for (screenId, position) in positions {
             guard let info = displayInfo(for: screenId) else {
                 fatalError("Unable to find screen info for id: \(screenId)")
             }
