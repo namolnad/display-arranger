@@ -11,7 +11,7 @@ import Foundation
 
 let arranger: DisplayArranger = .init()
 
-// FIXME: - Create argument parser object
+// FIXME: - Create argument parser object, w/ safer access of arguments to prevent out of range crashes
 switch ProcessInfo().arguments {
 case let args where args.count == 1, let args where args[1] == "-h":
     arranger.output(item: .help)
@@ -23,7 +23,7 @@ case let args where args[1] == "-setMain":
     guard let mainId = UInt32(args[2]) else {
         fatalError("No main id argument")
     }
-    guard args[3] == "-otherPosition" else {
+    guard args.count > 3, args[3] == "-otherPosition" else {
         arranger.setAsMainDisplay(id: mainId)
         break
     }
