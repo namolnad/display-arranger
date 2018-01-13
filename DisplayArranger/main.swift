@@ -28,14 +28,12 @@ case let args where args[1] == "-setMainId":
 
     do {
         // FIXME: need to figure out parsing for > 2 displays
-        guard case let ids = try arranger.screenIds(), ids.count <= 2 else {
-            throw DisplayArrangerError.tooManyScreens
-        }
-        guard let other = ids.subtracting([mainId]).first else {
+        guard case let ids = try arranger.activeDisplayIds(context: .adjusting),
+            let other = ids.subtracting([mainId]).first else {
             throw DisplayArrangerError.screenPositionParsing
         }
-        let position: ScreenPosition = try .init(args[4])
-        try arranger.setAsMainDisplay(id: mainId, otherPositions: [other: position])
+
+        arranger.setAsMainDisplay(id: mainId, otherPositions: [other: try .init(args[4])])
     } catch {
         if let error = error as? DisplayArrangerError, let desc = error.localizedDescription {
             print(desc)

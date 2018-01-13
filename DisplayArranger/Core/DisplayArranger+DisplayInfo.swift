@@ -15,7 +15,7 @@ extension DisplayArranger {
             .flatMap(DisplayInfo.init)
     }
 
-    func info(for displayId: Int) -> DisplayInfo? {
-        return displaysInfo().first(where: { $0.id == UInt32(displayId) })
+    func displayInfo(for displayId: DisplayId) -> DisplayInfo? {
+        return displaysInfo().first(where: { $0.id == displayId })
     }
 }

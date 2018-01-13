@@ -1,5 +1,5 @@
 //
-//  StartingPosition.swift
+//  ScreenPosition.swift
 //  DisplayArranger
 //
 //  Created by Dan Loman on 1/11/18.
@@ -142,3 +142,8 @@ extension ScreenPosition: Hashable {
     }
 }
 
+extension ScreenPosition: CustomStringConvertible {
+    var description: String {
+        return "\(horizontal.rawValue)-\(vertical.rawValue)"
+    }
+}

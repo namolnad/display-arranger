@@ -22,7 +22,7 @@ final class DisplayArranger {
             case .displaysInfo:
                 output = displaysInfo().reduce("\n") { $0 + "\($1.description)\n" }
             case .screenIds:
-                output = try screenIds().reduce("\n") { $0 + "\($1)\n" }
+                output = try activeDisplayIds().reduce("\n") { $0 + "\($1)\n" }
             }
         } catch {
             output = error.localizedDescription
