@@ -20,8 +20,7 @@ final class ArgumentRouter {
 
         for arg in arguments.reversed() {
             if let command = Command(arguments: [arg] + pendingArguments.reversed()) {
-                defer { pendingArguments.removeAll() }
-
+                pendingArguments.removeAll()
                 commands.append(command)
             } else {
                 pendingArguments.append(arg)
@@ -66,7 +65,7 @@ final class ArgumentRouter {
         }
     }
 
-    enum CommandType: String {
+    private enum CommandType: String {
         case allowablePositions = "-allowablePositions"
         case displaysInfo = "-info"
         case help = "-h"
@@ -76,7 +75,7 @@ final class ArgumentRouter {
         case setMain = "-setMain"
     }
 
-    enum Command {
+    private enum Command {
         case allowablePositions
         case displaysInfo
         case help
