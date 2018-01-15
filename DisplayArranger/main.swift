@@ -9,7 +9,4 @@
 
 import Foundation
 
-let arranger: DisplayArranger = .init()
-let router: ArgumentRouter = .init()
-
-router.route(args: ProcessInfo().arguments, arranger: arranger)
+ArgumentRouter().route(args: ProcessInfo().arguments, arranger: .init())
