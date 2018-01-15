@@ -26,7 +26,7 @@ extension DisplayArranger {
             print("Successfully set display with id: \(id) as main display")
         }
 
-        if let positions = positions, let referenceFrame = displayInfo(for: id)?.frame {
+        if let positions = positions, !positions.isEmpty, let referenceFrame = displayInfo(for: id)?.frame {
             setFrames(for: positions, relativeTo: referenceFrame, config: config)
         } else if case let status = CGCompleteDisplayConfiguration(config, .permanently), status != .success {
             print("Error: \(status.rawValue)")

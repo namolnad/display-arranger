@@ -13,23 +13,24 @@ struct ScreenPosition {
 
     let vertical: Vertical
 
-    init(_ value: String) throws {
-        let position: ScreenPosition
-        switch value.components(separatedBy: "-") {
-        case let values where values.count == 2:
-            guard
-                let horizontal = Horizontal(rawValue: values[0]),
-                let vertical = Vertical(rawValue: values[1]) else {
-                throw DisplayArrangerError.malformedScreenPosition
-            }
-            position = .init(horizontal: horizontal, vertical: vertical)
-            guard ScreenPosition.supportedPositions.contains(position) else {
-                throw DisplayArrangerError.unsupportedScreenPosition
-            }
-        default:
-            throw DisplayArrangerError.malformedScreenPosition
+    init?(_ value: String?) {
+        guard let value = value else {
+            return nil
         }
-        self.init(horizontal: position.horizontal, vertical: position.vertical)
+        guard case let components = value.components(separatedBy: "-"), components.count == 2 else {
+            return nil
+        }
+        guard let first = components.first, let horizontal = Horizontal(rawValue: first) else {
+            return nil
+        }
+        guard let last = components.last, let vertical = Vertical(rawValue: last) else {
+            return nil
+        }
+        guard type(of: self).supportedPositions.contains(.init(horizontal: horizontal, vertical: vertical)) else {
+            return nil
+        }
+
+        self.init(horizontal: horizontal, vertical: vertical)
     }
 
     private init(horizontal: Horizontal, vertical: Vertical) {
