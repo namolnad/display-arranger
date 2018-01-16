@@ -8,6 +8,18 @@
 
 import Foundation
 
+struct PendingPosition {
+    let id: DisplayId
+    let position: ScreenPosition
+    let anchorId: DisplayId?
+}
+
+struct PositionConfig {
+    let id: DisplayId
+    let position: ScreenPosition
+    let anchorId: DisplayId
+}
+
 final class ArgumentRouter {
 
     func route(args: [String], arranger: DisplayArranger) {
@@ -31,7 +43,8 @@ final class ArgumentRouter {
             commands.append(arguments.isEmpty ? .help : .undefined)
         }
 
-        var pendingPositions: [DisplayId: ScreenPosition] = [:]
+        var pendingMissingAnchor: [PendingPosition] = []
+        var pendingWithAnchor: [PendingPosition] = []
 
         commands.forEach {
             switch $0 {
@@ -45,11 +58,11 @@ final class ArgumentRouter {
                 if let id = arranger.displaysInfo().first?.id {
                     arranger.moveCursor(to: point, onScreen: id)
                 }
-            case .otherPosition(let position, referenceDisplay: _):
-                // TODO: - set this up so can pass in the appropriate display id
-                // as well as a custom reference display
-                if case let displaysInfo = arranger.displaysInfo(), let primary = displaysInfo.first, let secondary = displaysInfo.last, primary.id != secondary.id {
-                    pendingPositions[secondary.id] = position
+            case let .otherPosition(pending):
+                if pending.anchorId == nil {
+                    pendingMissingAnchor.append(pending)
+                } else {
+                    pendingWithAnchor.append(pending)
                 }
             case .screenIds:
                 do {
@@ -58,7 +71,16 @@ final class ArgumentRouter {
                     print(error.localizedDescription)
                 }
             case .setMain(let id):
-                arranger.setAsMainDisplay(id: id, otherPositions: pendingPositions)
+                var positionConfigs: [PositionConfig] = pendingMissingAnchor.flatMap({ .init(id: $0.id, position: $0.position, anchorId: id) })
+
+                let configs: [PositionConfig] = pendingWithAnchor.flatMap({
+                    guard let anchorId = $0.anchorId else { return nil }
+                    return .init(id: $0.id, position: $0.position, anchorId: anchorId)
+                })
+
+                positionConfigs.append(contentsOf: configs)
+
+                arranger.setAsMainDisplay(id: id, otherPositions: positionConfigs)
             case .undefined:
                 print(DisplayArranger.TextOutput.undefined)
             }
@@ -80,7 +102,7 @@ final class ArgumentRouter {
         case displaysInfo
         case help
         case moveMouse(CGPoint)
-        case otherPosition(ScreenPosition, referenceDisplay: DisplayId?)
+        case otherPosition(PendingPosition)
         case screenIds
         case setMain(DisplayId)
         case undefined
@@ -105,14 +127,14 @@ final class ArgumentRouter {
                     self = .moveMouse(point)
                     return
                 }
-            case .otherPosition where arguments.count == 2:
-                if let position = ScreenPosition(arguments.last) {
-                    self = .otherPosition(position, referenceDisplay: nil)
+            case .otherPosition where arguments.count == 3:
+                if let id = DisplayId(arguments[1]), let position = ScreenPosition(arguments.last) {
+                    self = .otherPosition(.init(id: id, position: position, anchorId: nil))
                     return
                 }
-            case .otherPosition where arguments.count == 3:
-                if let position = ScreenPosition(arguments[1]), let id = DisplayId(arguments.last) {
-                    self = .otherPosition(position, referenceDisplay: id)
+            case .otherPosition where arguments.count == 4:
+                if let id = DisplayId(arguments[1]), let position = ScreenPosition(arguments[2]), let anchorId = DisplayId(arguments.last) {
+                    self = .otherPosition(.init(id: id, position: position, anchorId: anchorId))
                     return
                 }
             case .setMain where arguments.count == 2:

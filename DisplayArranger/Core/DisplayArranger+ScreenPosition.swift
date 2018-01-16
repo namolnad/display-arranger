@@ -10,7 +10,7 @@ import Foundation
 
 extension DisplayArranger {
 
-    func setAsMainDisplay(id: DisplayId, otherPositions positions: [DisplayId: ScreenPosition]? = nil) {
+    func setAsMainDisplay(id: DisplayId, otherPositions: [PositionConfig]) {
         let pointer: Pointer<CGDisplayConfigRef?> = .init(capacity: 1)
 
         var config: CGDisplayConfigRef? = .init(pointer.pointer)
@@ -23,38 +23,31 @@ extension DisplayArranger {
         if case let status = CGConfigureDisplayOrigin(config, id, 0, 0), status != .success {
             print("Error: \(status.rawValue)")
         } else {
-            print("Successfully set display with id: \(id) as main display")
+            print("Successfully set '\(id)' as main display")
         }
 
-        if let positions = positions, !positions.isEmpty, let referenceFrame = displayInfo(for: id)?.frame {
-            setFrames(for: positions, relativeTo: referenceFrame, config: config)
-        } else if case let status = CGCompleteDisplayConfiguration(config, .permanently), status != .success {
+        for positionConfig in otherPositions where positionConfig.id != id {
+            if let anchorFrame = displayInfo(for: positionConfig.anchorId)?.frame {
+                setFrame(for: positionConfig, relativeTo: anchorFrame, config: &config)
+            }
+        }
+
+        if case let status = CGCompleteDisplayConfiguration(config, .permanently), status != .success {
             print("Error: \(status.rawValue)")
         }
     }
 
-    func setFrames(for positions: [DisplayId: ScreenPosition], relativeTo other: CGRect, config: CGDisplayConfigRef? = nil) {
-        let pointer: Pointer<CGDisplayConfigRef?> = .init(capacity: 1)
+    func setFrame(for positionConfig: PositionConfig, relativeTo other: CGRect, config: inout CGDisplayConfigRef?) {
+        guard let size = displayInfo(for: positionConfig.id)?.frame.size else {
+            fatalError("Unable to find display info for '\(positionConfig.id)'")
+        }
 
-        var positionsConfig: CGDisplayConfigRef? = config ?? .init(pointer.pointer)
+        let origin = positionConfig.position.origin(with: size, relativeTo: other)
 
-        if config == nil, case let status = CGBeginDisplayConfiguration(&positionsConfig), status != .success {
+        if case let status = CGConfigureDisplayOrigin(config, positionConfig.id, Int32(origin.x), Int32(origin.y)), status != .success {
             print("Error: \(status.rawValue)")
         }
 
-        for (screenId, position) in positions {
-            guard let info = displayInfo(for: screenId) else {
-                fatalError("Unable to find screen info for id: \(screenId)")
-            }
-            let origin = position.origin(with: info.frame.size, relativeTo: other)
-            if case let status = CGConfigureDisplayOrigin(positionsConfig, screenId, Int32(origin.x), Int32(origin.y)), status != .success {
-                print("Error: \(status.rawValue)")
-            }
-            print("Successfully set display with id: \(screenId) to position: \(position.description)")
-        }
-
-        if case let status = CGCompleteDisplayConfiguration(positionsConfig, .permanently), status != .success {
-            print("Error: \(status.rawValue)")
-        }
+        print("Successfully positioned '\(positionConfig.id)' to '\(positionConfig.position.description)' of reference display")
     }
 }
