@@ -23,7 +23,7 @@ extension DisplayArranger {
         if case let status = CGConfigureDisplayOrigin(config, id, 0, 0), status != .success {
             print("Error: \(status.rawValue)")
         } else {
-            print("Successfully set '\(id)' as main display")
+            print("\nSuccessfully set '\(id)' as main display")
         }
 
         var frames: [DisplayId: CGRect] = [:]
@@ -55,7 +55,7 @@ extension DisplayArranger {
             print("Error: \(status.rawValue)")
         }
 
-        print("Successfully positioned '\(positionConfig.id)' to '\(positionConfig.position.description)' of reference display")
+        print("Successfully positioned '\(positionConfig.id)' to '\(positionConfig.position.description)' of reference display\n")
 
         return .init(origin: origin, size: size)
     }

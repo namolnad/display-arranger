@@ -66,6 +66,8 @@ final class ArgumentRouter {
             case .supportedPositions:
                 print(DisplayArranger.TextOutput.supportedPositions)
             case .undefined:
+                print("\nArguments received: \(arguments)")
+
                 print(DisplayArranger.TextOutput.undefined)
             }
         }

@@ -46,7 +46,7 @@ extension DisplayArranger {
         static var undefined: String {
             return """
 
-            Undefined argument. -h shows help.
+            Undefined argument/s. -h shows help.
             
             """
         }
