@@ -36,8 +36,6 @@ final class ArgumentRouter {
 
         commands.forEach {
             switch $0 {
-            case .allowablePositions:
-                print(DisplayArranger.TextOutput.allowablePositions)
             case .displaysInfo:
                 print(arranger.displaysInfo().reduce("\n") { $0 + "\($1.description)\n" })
             case .help:
@@ -65,6 +63,8 @@ final class ArgumentRouter {
                 positionConfigs.insert(contentsOf: configs, at: 0)
 
                 arranger.setAsMainDisplay(id: id, otherPositions: positionConfigs)
+            case .supportedPositions:
+                print(DisplayArranger.TextOutput.supportedPositions)
             case .undefined:
                 print(DisplayArranger.TextOutput.undefined)
             }
@@ -72,23 +72,23 @@ final class ArgumentRouter {
     }
 
     private enum CommandType: String {
-        case allowablePositions = "-allowablePositions"
         case displaysInfo = "-info"
         case help = "-h"
         case ids = "-ids"
         case moveMouse = "-moveMouse"
         case otherPosition = "-otherPosition"
         case setMain = "-setMain"
+        case supportedPositions = "-supportedPositions"
     }
 
     private enum Command {
-        case allowablePositions
         case displaysInfo
         case help
         case ids
         case moveMouse(CGPoint)
         case otherPosition(IntendedPosition)
         case setMain(DisplayId)
+        case supportedPositions
         case undefined
 
         init?(arguments: [String]) {
@@ -97,9 +97,6 @@ final class ArgumentRouter {
             }
 
             switch type {
-            case .allowablePositions:
-                self = .allowablePositions
-                return
             case .displaysInfo:
                 self = .displaysInfo
                 return
@@ -129,6 +126,9 @@ final class ArgumentRouter {
                     self = .setMain(id)
                     return
                 }
+            case .supportedPositions:
+                self = .supportedPositions
+                return
             default:
                 return nil
             }

@@ -15,30 +15,30 @@ extension DisplayArranger {
             return """
 
             Use display-arranger to get information about your current displays,
-            for setting the main screen, and for setting the positions of your other
-            connected screens (relative to the main-screen's position.)
+            for setting the main display, and for setting the positions of your other
+            connected displays relative to another display's position (defaults to main)
 
             Usage: display-arranger
             [-h] Shows the help text
-            [-info] Shows information about the connected displays
             [-ids] Returns the ids for all connected displays
-            [-setMain <DisplayId>] Pass the id of the screen that you want to make the main screen
-            [-otherPosition <Position>] Use this with -setMain to determine placement of other screens
-            [-allowablePositions] Displays a list of the allowable positions for -otherPosition command
-            [-moveMouse] Moves the mouse cursor to the given coordinates on the main screen (example: 100-100)
+            [-info] Shows information about the connected displays
+            [-moveMouse] Moves the mouse cursor to the given coordinates on the main display (example: 100-100)
+            [-setMain <DisplayId>] Pass the id of the display that you want to make the main display
+            [-supportedPositions] Displays a list of the supported positions for -otherPosition command
+            [-otherPosition <Position>] Use this with -setMain to determine placement of other displays
 
 
             Examples:
             display-arranger -info
-            Returns information about your attached screens including the Screen ID
+            Returns information about your attached displays including the DisplayId
 
             display-arranger -setMain 69670848 -otherPosition onLeft-bottomAligned
-            Makes the screen with the DisplayId 69670848 the main screen.
-            Also positions other screens to the left, bottom-aligned to the main screen
+            Makes the display with the DisplayId 69670848 the main display and
+            positions other displays to the left, bottom-aligned to the main display
             as shown under the \"Arrangement\" section of the Displays preference pane.
 
             NOTE: Global Position {0, 0} coordinate (as shown under -info)
-            is the upper left corner of the main screen
+            is the upper left corner of the main display
 
             """
         }
@@ -51,7 +51,7 @@ extension DisplayArranger {
             """
         }
 
-        static var allowablePositions: String {
+        static var supportedPositions: String {
             return """
 
             onLeft-topAligned
