@@ -26,9 +26,16 @@ extension DisplayArranger {
             print("Successfully set '\(id)' as main display")
         }
 
+        var frames: [DisplayId: CGRect] = [:]
+
+        if let size = displayInfo(for: id)?.frame.size {
+            frames[id] = CGRect(origin: .zero, size: size)
+        }
+
         for positionConfig in otherPositions where positionConfig.id != id {
-            if let anchorFrame = displayInfo(for: positionConfig.anchorId)?.frame {
-                setFrame(for: positionConfig, relativeTo: anchorFrame, config: &config)
+            if let anchorFrame = frames[positionConfig.anchorId] {
+                let frame = setFrame(for: positionConfig, relativeTo: anchorFrame, config: &config)
+                frames[positionConfig.id] = frame
             }
         }
 
@@ -37,7 +44,7 @@ extension DisplayArranger {
         }
     }
 
-    func setFrame(for positionConfig: PositionConfig, relativeTo other: CGRect, config: inout CGDisplayConfigRef?) {
+    func setFrame(for positionConfig: PositionConfig, relativeTo other: CGRect, config: inout CGDisplayConfigRef?) -> CGRect {
         guard let size = displayInfo(for: positionConfig.id)?.frame.size else {
             fatalError("Unable to find display info for '\(positionConfig.id)'")
         }
@@ -49,5 +56,7 @@ extension DisplayArranger {
         }
 
         print("Successfully positioned '\(positionConfig.id)' to '\(positionConfig.position.description)' of reference display")
+
+        return .init(origin: origin, size: size)
     }
 }
