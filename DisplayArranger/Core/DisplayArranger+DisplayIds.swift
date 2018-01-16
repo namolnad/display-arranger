@@ -1,5 +1,5 @@
 //
-//  DisplayArranger+ScreenIds.swift
+//  DisplayArranger+DisplayIds.swift
 //  DisplayArranger
 //
 //  Created by Dan Loman on 1/11/18.

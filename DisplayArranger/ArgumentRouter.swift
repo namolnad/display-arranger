@@ -8,18 +8,6 @@
 
 import Foundation
 
-struct PendingPosition {
-    let id: DisplayId
-    let position: ScreenPosition
-    let anchorId: DisplayId?
-}
-
-struct PositionConfig {
-    let id: DisplayId
-    let position: ScreenPosition
-    let anchorId: DisplayId
-}
-
 final class ArgumentRouter {
 
     func route(args: [String], arranger: DisplayArranger) {
@@ -43,7 +31,7 @@ final class ArgumentRouter {
             commands.append(arguments.isEmpty ? .help : .undefined)
         }
 
-        var pendingMissingAnchor: [PendingPosition] = []
+        var intendedMissingAnchor: [IntendedPosition] = []
         var positionConfigs: [PositionConfig] = []
 
         commands.forEach {
@@ -62,16 +50,16 @@ final class ArgumentRouter {
                 if let anchorId = pending.anchorId {
                     positionConfigs.append(.init(id: pending.id, position: pending.position, anchorId: anchorId))
                 } else {
-                    pendingMissingAnchor.append(pending)
+                    intendedMissingAnchor.append(pending)
                 }
-            case .screenIds:
+            case .ids:
                 do {
                     print(try arranger.activeDisplayIds().reduce("\n") { $0 + "\($1)\n" })
                 } catch {
                     print(error.localizedDescription)
                 }
             case .setMain(let id):
-                let configs: [PositionConfig] = pendingMissingAnchor
+                let configs: [PositionConfig] = intendedMissingAnchor
                     .flatMap({ .init(id: $0.id, position: $0.position, anchorId: id) })
 
                 positionConfigs.insert(contentsOf: configs, at: 0)
@@ -87,9 +75,9 @@ final class ArgumentRouter {
         case allowablePositions = "-allowablePositions"
         case displaysInfo = "-info"
         case help = "-h"
+        case ids = "-ids"
         case moveMouse = "-moveMouse"
         case otherPosition = "-otherPosition"
-        case screenIds = "-screenIds"
         case setMain = "-setMain"
     }
 
@@ -97,9 +85,9 @@ final class ArgumentRouter {
         case allowablePositions
         case displaysInfo
         case help
+        case ids
         case moveMouse(CGPoint)
-        case otherPosition(PendingPosition)
-        case screenIds
+        case otherPosition(IntendedPosition)
         case setMain(DisplayId)
         case undefined
 
@@ -117,6 +105,9 @@ final class ArgumentRouter {
                 return
             case .help:
                 self = .help
+                return
+            case .ids:
+                self = .ids
                 return
             case .moveMouse where arguments.count == 2:
                 if let point = CGPoint(arguments.last) {
@@ -138,9 +129,6 @@ final class ArgumentRouter {
                     self = .setMain(id)
                     return
                 }
-            case .screenIds:
-                self = .screenIds
-                return
             default:
                 return nil
             }

@@ -20,9 +20,9 @@ extension DisplayArranger {
 
             Usage: display-arranger
             [-h] Shows the help text
-            [-info] Shows information about the connected screens
-            [-screenIds] Returns the ids for all connected screens
-            [-setMain <ScreenId>] Pass the id of the screen that you want to make the main screen
+            [-info] Shows information about the connected displays
+            [-ids] Returns the ids for all connected displays
+            [-setMain <DisplayId>] Pass the id of the screen that you want to make the main screen
             [-otherPosition <Position>] Use this with -setMain to determine placement of other screens
             [-allowablePositions] Displays a list of the allowable positions for -otherPosition command
             [-moveMouse] Moves the mouse cursor to the given coordinates on the main screen (example: 100-100)
@@ -33,7 +33,7 @@ extension DisplayArranger {
             Returns information about your attached screens including the Screen ID
 
             display-arranger -setMain 69670848 -otherPosition onLeft-bottomAligned
-            Makes the screen with the ScreenId 69670848 the main screen.
+            Makes the screen with the DisplayId 69670848 the main screen.
             Also positions other screens to the left, bottom-aligned to the main screen
             as shown under the \"Arrangement\" section of the Displays preference pane.
 
