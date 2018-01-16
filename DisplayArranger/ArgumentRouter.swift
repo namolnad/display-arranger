@@ -44,7 +44,7 @@ final class ArgumentRouter {
         }
 
         var pendingMissingAnchor: [PendingPosition] = []
-        var pendingWithAnchor: [PendingPosition] = []
+        var positionConfigs: [PositionConfig] = []
 
         commands.forEach {
             switch $0 {
@@ -59,10 +59,10 @@ final class ArgumentRouter {
                     arranger.moveCursor(to: point, onScreen: id)
                 }
             case let .otherPosition(pending):
-                if pending.anchorId == nil {
-                    pendingMissingAnchor.append(pending)
+                if let anchorId = pending.anchorId {
+                    positionConfigs.append(.init(id: pending.id, position: pending.position, anchorId: anchorId))
                 } else {
-                    pendingWithAnchor.append(pending)
+                    pendingMissingAnchor.append(pending)
                 }
             case .screenIds:
                 do {
@@ -71,14 +71,10 @@ final class ArgumentRouter {
                     print(error.localizedDescription)
                 }
             case .setMain(let id):
-                var positionConfigs: [PositionConfig] = pendingMissingAnchor.flatMap({ .init(id: $0.id, position: $0.position, anchorId: id) })
+                let configs: [PositionConfig] = pendingMissingAnchor
+                    .flatMap({ .init(id: $0.id, position: $0.position, anchorId: id) })
 
-                let configs: [PositionConfig] = pendingWithAnchor.flatMap({
-                    guard let anchorId = $0.anchorId else { return nil }
-                    return .init(id: $0.id, position: $0.position, anchorId: anchorId)
-                })
-
-                positionConfigs.append(contentsOf: configs)
+                positionConfigs.insert(contentsOf: configs, at: 0)
 
                 arranger.setAsMainDisplay(id: id, otherPositions: positionConfigs)
             case .undefined:
