@@ -45,6 +45,7 @@
 		22853014200EEA95008AD97F /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		22853016200EEA9D008AD97F /* CommandType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandType.swift; sourceTree = "<group>"; };
 		22853018200EEBD2008AD97F /* Numerics+DisplayArranger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Numerics+DisplayArranger.swift"; sourceTree = "<group>"; };
+		2285301A200F1B94008AD97F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		229C63FD2008583400F74A1D /* display-arranger */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "display-arranger"; sourceTree = BUILT_PRODUCTS_DIR; };
 		229C64002008583400F74A1D /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		229C64082008638000F74A1D /* ScreenPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenPosition.swift; sourceTree = "<group>"; };
@@ -106,10 +107,11 @@
 			isa = PBXGroup;
 			children = (
 				229C64002008583400F74A1D /* main.swift */,
-				229C641E20089CD000F74A1D /* Extensions */,
+				22853013200EEA83008AD97F /* ArgumentRouter */,
 				229C6415200899A700F74A1D /* Core */,
 				229C64072008636A00F74A1D /* Models */,
-				22853013200EEA83008AD97F /* ArgumentRouter */,
+				229C641E20089CD000F74A1D /* Extensions */,
+				2285301A200F1B94008AD97F /* Info.plist */,
 			);
 			path = DisplayArranger;
 			sourceTree = "<group>";
@@ -362,6 +364,8 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 92AC5VS8HG;
+				INFOPLIST_FILE = "$(SRCROOT)/DisplayArranger/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.display-arranger";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 			};
@@ -372,6 +376,8 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 92AC5VS8HG;
+				INFOPLIST_FILE = "$(SRCROOT)/DisplayArranger/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.display-arranger";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 			};
