@@ -78,6 +78,7 @@ final class ArgumentRouter {
         case help = "-h"
         case ids = "-ids"
         case moveMouse = "-moveMouse"
+        case op = "-op"
         case otherPosition = "-otherPosition"
         case setMain = "-setMain"
         case supportedPositions = "-supportedPositions"
@@ -113,12 +114,12 @@ final class ArgumentRouter {
                     self = .moveMouse(point)
                     return
                 }
-            case .otherPosition where arguments.count == 3:
+            case .otherPosition where arguments.count == 3, .op where arguments.count == 3:
                 if let id = DisplayId(arguments[1]), let position = ScreenPosition(arguments.last) {
                     self = .otherPosition(.init(id: id, position: position, anchorId: nil))
                     return
                 }
-            case .otherPosition where arguments.count == 4:
+            case .otherPosition where arguments.count == 4, .op where arguments.count == 3:
                 if let id = DisplayId(arguments[1]), let position = ScreenPosition(arguments[2]), let anchorId = DisplayId(arguments.last) {
                     self = .otherPosition(.init(id: id, position: position, anchorId: anchorId))
                     return
