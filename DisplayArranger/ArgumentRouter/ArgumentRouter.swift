@@ -1,15 +1,4 @@
-//
-//  ArgumentRouter.swift
-//  display-arranger
-//
-//  Created by Dan Loman on 1/14/18.
-//  Copyright © 2018 Daniel Loman. All rights reserved.
-//
-
-import Foundation
-
 final class ArgumentRouter {
-
     func route(args: [String], arranger: DisplayArranger) {
         var arguments = args
         // Remove first argument as it is simply the call to display-arranger
@@ -58,7 +47,7 @@ final class ArgumentRouter {
                 }
             case .setMain(let id):
                 let configs: [PositionConfig] = intendedMissingAnchor
-                    .flatMap({ .init(id: $0.id, position: $0.position, anchorId: id) })
+                    .compactMap { .init(id: $0.id, position: $0.position, anchorId: id) }
 
                 positionConfigs.insert(contentsOf: configs, at: 0)
 

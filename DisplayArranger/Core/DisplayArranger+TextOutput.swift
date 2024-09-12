@@ -1,18 +1,8 @@
-//
-//  DisplayArranger+TextOutput.swift
-//  DisplayArranger
-//
-//  Created by Dan Loman on 1/11/18.
-//  Copyright © 2018 Daniel Loman. All rights reserved.
-//
-
-import Foundation
-
 extension DisplayArranger {
     struct TextOutput {
         static var help: String {
             // FIXME: - adjust usage documentation to show new positioning logic
-            return """
+            """
 
             Use display-arranger to get information about your current displays,
             for setting the main display, and for setting the positions of your other
@@ -43,7 +33,7 @@ extension DisplayArranger {
         }
 
         static var undefined: String {
-            return """
+            """
 
             Undefined argument/s. -h shows help.
 
@@ -51,7 +41,7 @@ extension DisplayArranger {
         }
 
         static var supportedPositions: String {
-            return """
+            """
 
             onLeft-topAligned
             onLeft-bottomAligned

@@ -1,13 +1,3 @@
-//
-//  ScreenPosition.swift
-//  DisplayArranger
-//
-//  Created by Dan Loman on 1/11/18.
-//  Copyright © 2018 Daniel Loman. All rights reserved.
-//
-
-import Foundation
-
 struct ScreenPosition {
     let horizontal: Horizontal
 
@@ -40,20 +30,18 @@ struct ScreenPosition {
 }
 
 extension ScreenPosition: Hashable {
-    var hashValue: Int {
-        return horizontal.hashValue ^ vertical.hashValue
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(horizontal)
+        hasher.combine(vertical)
     }
 
     static func ==(lhs: ScreenPosition, rhs: ScreenPosition) -> Bool {
-        return lhs.horizontal == rhs.horizontal &&
-            lhs.vertical == rhs.vertical
+        lhs.horizontal == rhs.horizontal && lhs.vertical == rhs.vertical
     }
 }
 
 extension ScreenPosition: CustomStringConvertible {
-    var description: String {
-        return "\(horizontal.rawValue)-\(vertical.rawValue)"
-    }
+    var description: String { "\(horizontal.rawValue)-\(vertical.rawValue)" }
 }
 
 extension ScreenPosition {

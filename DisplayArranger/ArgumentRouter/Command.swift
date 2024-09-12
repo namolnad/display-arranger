@@ -1,12 +1,4 @@
-//
-//  Command.swift
-//  display-arranger
-//
-//  Created by Dan Loman on 1/16/18.
-//  Copyright © 2018 Daniel Loman. All rights reserved.
-//
-
-import Foundation
+import CoreGraphics
 
 enum Command {
     case displaysInfo

@@ -1,13 +1,3 @@
-//
-//  Pointer.swift
-//  DisplayArranger
-//
-//  Created by Dan Loman on 1/12/18.
-//  Copyright © 2018 Daniel Loman. All rights reserved.
-//
-
-import Foundation
-
 final class Pointer<A> {
     let pointer: UnsafeMutablePointer<A>
 
@@ -30,10 +20,10 @@ final class Pointer<A> {
     }
 
     deinit {
-        pointer.deallocate(capacity: capacity)
+        pointer.deallocate()
     }
 
     subscript(_ key: Int) -> A {
-        return pointer[key]
+        pointer[key]
     }
 }

@@ -1,11 +1,3 @@
-//
-//  DisplayArrangerError.swift
-//  DisplayArranger
-//
-//  Created by Dan Loman on 1/12/18.
-//  Copyright © 2018 Daniel Loman. All rights reserved.
-//
-
 import Foundation
 
 enum DisplayArrangerError: LocalizedError {

@@ -1,11 +1,4 @@
-//
-//  DisplayInfo.swift
-//  DisplayArranger
-//
-//  Created by Dan Loman on 1/12/18.
-//  Copyright © 2018 Daniel Loman. All rights reserved.
-//
-
+import CoreGraphics
 import AppKit
 
 typealias DisplayId = UInt32
@@ -16,7 +9,7 @@ struct DisplayInfo {
     var frame: CGRect
 
     var globalPosition: String {
-        return "(Origin: \(frame.origin)), Termination: (\(frame.origin.x + frame.size.width), \(frame.origin.y + frame.size.height)))"
+        "(Origin: \(frame.origin)), Termination: (\(frame.origin.x + frame.size.width), \(frame.origin.y + frame.size.height)))"
     }
 
     let colorSpace: NSColorSpace?

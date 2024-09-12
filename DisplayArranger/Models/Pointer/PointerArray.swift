@@ -1,13 +1,3 @@
-//
-//  PointerArray.swift
-//  DisplayArranger
-//
-//  Created by Dan Loman on 1/11/18.
-//  Copyright © 2018 Daniel Loman. All rights reserved.
-//
-
-import Foundation
-
 final class PointerArray<A> {
     let capacity: Int
 
@@ -16,7 +6,7 @@ final class PointerArray<A> {
     var first: UnsafeMutablePointer<A>
 
     var array: [A] {
-        return Array(value)
+        .init(value)
     }
 
     init(capacity: Int) {
@@ -30,10 +20,10 @@ final class PointerArray<A> {
     }
 
     deinit {
-        first.deallocate(capacity: capacity)
+        first.deallocate()
     }
 
     subscript(_ index: Int) -> A {
-        return value[index]
+        value[index]
     }
 }
