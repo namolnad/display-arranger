@@ -3,7 +3,7 @@ enum CommandType {
     case version
 
     case info
-    case listIds
+    case listDisplays
     case listPositions
 
     case primary
@@ -20,8 +20,8 @@ extension CommandType {
             self = .version
         case "-h", "--help":
             self = .help
-        case "-l", "--list-ids":
-            self = .listIds
+        case "-l", "--list-displays":
+            self = .listDisplays
         case "-L", "--list-positions":
             self = .listPositions
         case "-p", "--primary":

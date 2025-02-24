@@ -33,7 +33,7 @@ final class ArgumentRouter {
                 if let id = DisplayArranger.displaysInfo().first?.id {
                     DisplayArranger.moveCursor(to: point, onScreen: id)
                 }
-            case .listIds:
+            case .listDisplays:
                 do {
                     print(try DisplayArranger.activeDisplayIds().reduce("\n") { $0 + "\($1)\n" })
                 } catch {

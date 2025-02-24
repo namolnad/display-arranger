@@ -5,7 +5,7 @@ enum Command {
     case version
 
     case info
-    case listIds
+    case listDisplays
     case listPositions
 
     case primary(DisplayId)
@@ -29,8 +29,8 @@ enum Command {
         case .info:
             self = .info
             return
-        case .listIds:
-            self = .listIds
+        case .listDisplays:
+            self = .listDisplays
             return
         case .listPositions:
             self = .listPositions
