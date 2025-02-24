@@ -3,18 +3,18 @@ import CoreGraphics
 extension ScreenPosition {
     enum Horizontal: String {
         case centered
-        case onLeft
-        case onRight
-        case leftAligned
-        case rightAligned
+        case onLeft = "on-left"
+        case onRight = "on-right"
+        case leftAligned = "left-aligned"
+        case rightAligned = "right-aligned"
     }
 
     enum Vertical: String {
         case above
         case below
         case centered
-        case bottomAligned
-        case topAligned
+        case bottomAligned = "bottom-aligned"
+        case topAligned = "top-aligned"
     }
 }
 

@@ -1,13 +1,17 @@
 import CoreGraphics
 
 enum Command {
-    case displaysInfo
     case help
-    case ids
-    case moveMouse(CGPoint)
-    case otherPosition(IntendedPosition)
-    case setMain(DisplayId)
-    case supportedPositions
+    case version
+
+    case info
+    case listIds
+    case listPositions
+
+    case primary(DisplayId)
+    case arrange(IntendedPosition)
+    case mouse(CGPoint)
+
     case undefined
 
     init?(arguments: [String]) {
@@ -16,38 +20,41 @@ enum Command {
         }
 
         switch commandType {
-        case .displaysInfo:
-            self = .displaysInfo
-            return
         case .help:
             self = .help
             return
-        case .ids:
-            self = .ids
+        case .version:
+            self = .version
             return
-        case .moveMouse where arguments.count == 2:
-            if let point = CGPoint(arguments.last) {
-                self = .moveMouse(point)
-                return
-            }
-        case .otherPosition where arguments.count == 3, .op where arguments.count == 3:
-            if let id = DisplayId(arguments[1]), let position = ScreenPosition(arguments.last) {
-                self = .otherPosition(.init(id: id, position: position, anchorId: nil))
-                return
-            }
-        case .otherPosition where arguments.count == 4, .op where arguments.count == 3:
-            if let id = DisplayId(arguments[1]), let position = ScreenPosition(arguments[2]), let anchorId = DisplayId(arguments.last) {
-                self = .otherPosition(.init(id: id, position: position, anchorId: anchorId))
-                return
-            }
-        case .setMain where arguments.count == 2:
+        case .info:
+            self = .info
+            return
+        case .listIds:
+            self = .listIds
+            return
+        case .listPositions:
+            self = .listPositions
+            return
+        case .primary where arguments.count == 2:
             if let id = DisplayId(arguments.last) {
-                self = .setMain(id)
+                self = .primary(id)
                 return
             }
-        case .supportedPositions:
-            self = .supportedPositions
-            return
+        case .arrange where arguments.count == 4:
+            if let id = DisplayId(arguments[1]), let position = ScreenPosition(arguments[2]), let anchorId = DisplayId(arguments.last) {
+                self = .arrange(.init(id: id, position: position, anchorId: anchorId))
+                return
+            }
+        case .arrange where arguments.count == 3:
+            if let id = DisplayId(arguments[1]), let position = ScreenPosition(arguments.last) {
+                self = .arrange(.init(id: id, position: position, anchorId: nil))
+                return
+            }
+        case .mouse where arguments.count == 2:
+            if let point = CGPoint(arguments.last) {
+                self = .mouse(point)
+                return
+            }
         default:
             return nil
         }

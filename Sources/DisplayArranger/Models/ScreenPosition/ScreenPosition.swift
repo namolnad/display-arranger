@@ -7,15 +7,18 @@ struct ScreenPosition {
         guard let value = value else {
             return nil
         }
-        guard case let components = value.components(separatedBy: "-"), components.count == 2 else {
-            return nil
-        }
-        guard let first = components.first, let horizontal = Horizontal(rawValue: first) else {
-            return nil
-        }
-        guard let last = components.last, let vertical = Vertical(rawValue: last) else {
-            return nil
-        }
+        guard
+            case let components = value.components(separatedBy: ":"),
+            components.count == 2
+        else { return nil }
+        guard
+            let first = components.first,
+            let horizontal = Horizontal(rawValue: first)
+        else { return nil }
+        guard
+            let last = components.last,
+            let vertical = Vertical(rawValue: last)
+        else { return nil }
         guard type(of: self).supportedPositions.contains(.init(horizontal: horizontal, vertical: vertical)) else {
             return nil
         }
