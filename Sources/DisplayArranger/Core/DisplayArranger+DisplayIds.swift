@@ -1,7 +1,6 @@
 import CoreGraphics
 
 extension DisplayArranger {
-
     func activeDisplayIds() throws -> Set<DisplayId> {
         var displayCount: CGDisplayCount = .init()
 

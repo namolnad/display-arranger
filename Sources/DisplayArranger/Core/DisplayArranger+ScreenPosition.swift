@@ -1,7 +1,6 @@
 import CoreGraphics
 
 extension DisplayArranger {
-
     func setAsMainDisplay(id: DisplayId, otherPositions: [PositionConfig]) {
         let pointer: Pointer<CGDisplayConfigRef?> = .init(capacity: 1)
 

@@ -1,7 +1,6 @@
 extension DisplayArranger {
     struct TextOutput {
         static var help: String {
-            // FIXME: - adjust usage documentation to show new positioning logic
             """
 
             Use display-arranger to get information about your current displays,
