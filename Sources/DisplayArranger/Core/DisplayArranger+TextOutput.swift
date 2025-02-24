@@ -37,7 +37,7 @@ extension DisplayArranger {
             display-arranger --info
             Returns information about your attached displays
 
-            display-arranger --primary 69670848 -o 54019204 on-left:bottom-aligned
+            display-arranger --primary 69670848 -a 54019204 on-left:bottom-aligned
             Makes the display with the DisplayId 69670848 the primary display and
             positions 54019204 to the left of, and bottom-aligned to, the primary display
 
