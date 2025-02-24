@@ -23,8 +23,8 @@ final class ArgumentRouter {
         var intendedMissingAnchor: [IntendedPosition] = []
         var positionConfigs: [PositionConfig] = []
 
-        commands.forEach {
-            switch $0 {
+        commands.forEach { command in
+            switch command {
             case .displaysInfo:
                 print(arranger.displaysInfo().reduce("\n") { $0 + "\($1.description)\n" })
             case .help:
