@@ -17,6 +17,13 @@ display-arranger
 
 Note: For the --otherPosition command, <ReferenceDisplayId> is optional (defaults to the main display if not included) and is used to determine which screen the included position parameter refers to when laying out your display arrangement. Order of arguments received is important for this command. If you are using a secondary screen as the reference for another secondary screen, the reference display's frame must already be determined, either by itself having referenced the main screen or another anchored display prior to itself being used as a reference. For example: `display-arranger --setMain 1234 -op 5678 onLeft-above -op 9012 onLeft-bottomAligned 5678` is valid and unambiguous, whereas `display-arranger --setMain 1234 -op 9012 onLeft-bottomAligned 5678 -op 5678 onLeft-above` will not have the information necessary at runtime to provide 9012 with a reference frame. This will result in 9012's position not being set as intended.
 
+# Installation
+To install display-arranger, you can either download the latest release from the [releases page](https://github.com/namolnad/display-arranger/releases) or build the application from source. To build from source, clone the repository and run the following commands in the root directory of the project:
+``` swift
+swift build -c release
+cp .build/release/display-arranger /usr/local/bin/display-arranger
+```
+
 # Acknowledgements
 display-arranger is a derivative work of [hmscreens](http://www.hamsoftengineering.com/codeSharing/hmscreens/hmscreens.html) and started as a Swift rewrite of that application. Much of the visible functionality remains quite similar to the original product, though display-arranger adds several useful/more robust features and incorporates various technical improvements.
 
