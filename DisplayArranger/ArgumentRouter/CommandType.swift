@@ -12,19 +12,19 @@ enum CommandType {
 extension CommandType {
     init?(rawValue: String) {
         switch rawValue {
-        case "-i", "-info":
+        case "-i", "--info":
             self = .displaysInfo
-        case "-h", "-help":
+        case "-h", "--help":
             self = .help
-        case "-ids":
+        case "--ids":
             self = .ids
-        case "-moveMouse":
+        case "--moveMouse":
             self = .moveMouse
-        case "-op", "-otherPosition":
+        case "-op", "--otherPosition":
             self = .otherPosition
-        case "-setMain":
+        case "--setMain":
             self = .setMain
-        case "-supportedPositions":
+        case "--supportedPositions":
             self = .supportedPositions
         default:
             return nil
