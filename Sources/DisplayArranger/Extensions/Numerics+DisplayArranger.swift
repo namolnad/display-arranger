@@ -5,7 +5,7 @@ extension CGPoint {
         guard let string = string else {
             return nil
         }
-        guard case let components = string.components(separatedBy: "-"), components.count == 2 else {
+        guard case let components = string.components(separatedBy: ","), components.count == 2 else {
             return nil
         }
         guard let x = CGFloat(components.first), let y = CGFloat(components.last) else {

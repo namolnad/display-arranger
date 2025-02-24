@@ -18,7 +18,7 @@ display-arranger
 # Action commands
 [-p, --primary <DisplayId>] Pass the id of the display that you want to make the primary display (dock/menu bar)
 [-a, --arrange <DisplayId> <Position> <ReferenceDisplayId>] Used in conjunction with --primary to control the position of your other displays. Order is important, see README for additional usage details.
-[-m, --move] Moves the mouse cursor to the given coordinates on the main display (example: 100-100)
+[-m, --move] Moves the mouse cursor to the given coordinates on the main display (example: 100,100)
 ```
 
 
