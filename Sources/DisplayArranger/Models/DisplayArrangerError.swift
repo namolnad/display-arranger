@@ -13,7 +13,7 @@ enum DisplayArrangerError: LocalizedError {
         case .unavailable:
             description = "Can't get displays"
         case .tooManyScreens:
-            description = "display-arranger can handle a max of 2 screens when adjusting the main screen position"
+            description = "display-arranger can handle a max of 2 screens when adjusting the primary screen position"
         case .malformedScreenPosition:
             description = "Screen position can not be parsed from argument. See -h for examples"
         case .unsupportedScreenPosition:

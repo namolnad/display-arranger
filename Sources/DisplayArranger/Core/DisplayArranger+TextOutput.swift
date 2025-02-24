@@ -1,6 +1,14 @@
 extension DisplayArranger {
+    static var textOutput: TextOutput { .init() }
+}
+
+extension DisplayArranger {
     struct TextOutput {
-        static var help: String {
+        fileprivate init() {}
+
+        var version: String { "v0.3.0" }
+
+        var help: String {
             """
 
             Use display-arranger to get information about your current displays,
@@ -8,30 +16,37 @@ extension DisplayArranger {
             connected displays relative to another display's position (defaults to main)
 
             Usage: display-arranger
+
+            # Basic/Info commands
             [-h, --help] Shows the help text
-            [--ids] Returns the ids for all connected displays
+            [-v, --version] Shows the version of the application
+
+            # Query/List commands
             [-i, --info] Shows information about the connected displays
-            [--moveMouse] Moves the mouse cursor to the given coordinates on the main display (example: 100-100)
-            [--setMain <DisplayId>] Pass the id of the display that you want to make the main display (dock/menu bar)
-            [--supportedPositions] Displays a list of the supported positions for --otherPosition command
-            [-op, --otherPosition <DisplayId> <Position> <ReferenceDisplayId>] Used in conjunction with --setMain to
+            [-l, --list-displays] Returns the ids for all connected displays
+            [-L, --list-positions] Displays a list of the supported positions for --arrange argument
+
+            # Action commands
+            [-p, --primary <DisplayId>] Pass the id of the display that you want to make the primary display (dock/menu bar)
+            [-a, --arrange <DisplayId> <Position> <ReferenceDisplayId>] Used in conjunction with --primary to
             control the position of your other displays. Order is important, see README for additional usage details.
+            [-m, --mouse] Moves the mouse cursor to the given coordinates on the main display (example: 100-100)
 
 
             Examples:
             display-arranger --info
             Returns information about your attached displays
 
-            display-arranger --setMain 69670848 -op 54019204 onLeft-bottomAligned
+            display-arranger --primary 69670848 -o 54019204 on-left:bottom-aligned
             Makes the display with the DisplayId 69670848 the main display and
-            positions 54019204 to the left of, bottom-aligned to, the main display
+            positions 54019204 to the left of, and bottom-aligned to, the main display
 
             Note: Global Position's origin is the upper-left corner of the display
 
             """
         }
 
-        static var undefined: String {
+        var undefined: String {
             """
 
             Undefined argument/s. -h shows help.
@@ -39,25 +54,25 @@ extension DisplayArranger {
             """
         }
 
-        static var supportedPositions: String {
+        var supportedPositions: String {
             """
 
-            onLeft-topAligned
-            onLeft-bottomAligned
-            onLeft-below
-            onLeft-above
-            onLeft-centered
-            onRight-topAligned
-            onRight-bottomAligned
-            onRight-below
-            onRight-above
-            onRight-centered
-            above-leftAligned
-            above-centered
-            above-rightAligned
-            below-leftAligned
-            below-centered
-            below-rightAligned
+            on-left:top-aligned
+            on-left:bottom-aligned
+            on-left:below
+            on-left:above
+            on-left:centered
+            on-right:top-aligned
+            on-right:bottom-aligned
+            on-right:below
+            on-right:above
+            on-right:centered
+            above:left-aligned
+            above:centered
+            above:right-aligned
+            below:left-aligned
+            below:centered
+            below:right-aligned
 
             """
         }

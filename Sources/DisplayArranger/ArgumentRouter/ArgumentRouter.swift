@@ -1,5 +1,5 @@
 final class ArgumentRouter {
-    func route(args: [String], arranger: DisplayArranger) {
+    func route(args: [String]) {
         var arguments = args
         // Remove first argument as it is simply the call to display-arranger
         arguments.removeFirst()
@@ -25,39 +25,41 @@ final class ArgumentRouter {
 
         commands.forEach { command in
             switch command {
-            case .displaysInfo:
-                print(arranger.displaysInfo().reduce("\n") { $0 + "\($1.description)\n" })
             case .help:
-                print(DisplayArranger.TextOutput.help)
-            case .moveMouse(let point):
-                if let id = arranger.displaysInfo().first?.id {
-                    arranger.moveCursor(to: point, onScreen: id)
+                print(DisplayArranger.textOutput.help)
+            case .info:
+                print(DisplayArranger.displaysInfo().reduce("\n") { $0 + "\($1.description)\n" })
+            case .mouse(let point):
+                if let id = DisplayArranger.displaysInfo().first?.id {
+                    DisplayArranger.moveCursor(to: point, onScreen: id)
                 }
-            case let .otherPosition(pending):
-                if let anchorId = pending.anchorId {
-                    positionConfigs.append(.init(id: pending.id, position: pending.position, anchorId: anchorId))
-                } else {
-                    intendedMissingAnchor.append(pending)
-                }
-            case .ids:
+            case .listIds:
                 do {
-                    print(try arranger.activeDisplayIds().reduce("\n") { $0 + "\($1)\n" })
+                    print(try DisplayArranger.activeDisplayIds().reduce("\n") { $0 + "\($1)\n" })
                 } catch {
                     print(error.localizedDescription)
                 }
-            case .setMain(let id):
+            case .listPositions:
+                print(DisplayArranger.textOutput.supportedPositions)
+            case .primary(let id):
                 let configs: [PositionConfig] = intendedMissingAnchor
                     .compactMap { .init(id: $0.id, position: $0.position, anchorId: id) }
 
                 positionConfigs.insert(contentsOf: configs, at: 0)
 
-                arranger.setAsMainDisplay(id: id, otherPositions: positionConfigs)
-            case .supportedPositions:
-                print(DisplayArranger.TextOutput.supportedPositions)
+                DisplayArranger.setAsPrimaryDisplay(id: id, otherPositions: positionConfigs)
+            case let .arrange(pending):
+                if let anchorId = pending.anchorId {
+                    positionConfigs.append(.init(id: pending.id, position: pending.position, anchorId: anchorId))
+                } else {
+                    intendedMissingAnchor.append(pending)
+                }
+            case .version:
+                print(DisplayArranger.textOutput.version)
             case .undefined:
                 print("\nArguments received: \(arguments)")
 
-                print(DisplayArranger.TextOutput.undefined)
+                print(DisplayArranger.textOutput.undefined)
             }
         }
     }
