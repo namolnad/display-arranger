@@ -12,8 +12,8 @@ extension DisplayArranger {
             """
 
             Use display-arranger to get information about your current displays,
-            for setting the main display, and for setting the positions of your other
-            connected displays relative to another display's position (defaults to main)
+            for setting the primary display, and for setting the positions of your other
+            connected displays relative to another display's position (defaults to primary)
 
             Usage: display-arranger
 
@@ -30,7 +30,7 @@ extension DisplayArranger {
             [-p, --primary <DisplayId>] Pass the id of the display that you want to make the primary display (dock/menu bar)
             [-a, --arrange <DisplayId> <Position> <ReferenceDisplayId>] Used in conjunction with --primary to
             control the position of your other displays. Order is important, see README for additional usage details.
-            [-m, --mouse] Moves the mouse cursor to the given coordinates on the main display (example: 100,100)
+            [-m, --mouse] Moves the mouse cursor to the given coordinates on the primary display (example: 100,100)
 
 
             Examples:
@@ -38,8 +38,8 @@ extension DisplayArranger {
             Returns information about your attached displays
 
             display-arranger --primary 69670848 -o 54019204 on-left:bottom-aligned
-            Makes the display with the DisplayId 69670848 the main display and
-            positions 54019204 to the left of, and bottom-aligned to, the main display
+            Makes the display with the DisplayId 69670848 the primary display and
+            positions 54019204 to the left of, and bottom-aligned to, the primary display
 
             Note: Global Position's origin is the upper-left corner of the display
 
@@ -49,7 +49,7 @@ extension DisplayArranger {
         var undefined: String {
             """
 
-            Undefined argument/s. -h shows help.
+            Undefined or malformed argument/s. -h shows help.
 
             """
         }
