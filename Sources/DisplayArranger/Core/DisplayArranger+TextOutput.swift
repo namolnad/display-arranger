@@ -32,7 +32,6 @@ extension DisplayArranger {
             control the position of your other displays. Order is important, see README for additional usage details.
             [-m, --mouse] Moves the mouse cursor to the given coordinates on the primary display (example: 100,100)
 
-
             Examples:
             display-arranger --info
             Returns information about your attached displays
