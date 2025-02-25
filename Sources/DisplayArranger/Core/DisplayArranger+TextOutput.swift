@@ -6,7 +6,7 @@ extension DisplayArranger {
     struct TextOutput {
         fileprivate init() {}
 
-        var version: String { "v0.3.0" }
+        var version: String { "v0.3.1" }
 
         var help: String {
             """
