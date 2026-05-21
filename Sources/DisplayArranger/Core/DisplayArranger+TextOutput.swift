@@ -66,12 +66,12 @@ extension DisplayArranger {
             on-right:below
             on-right:above
             on-right:centered
-            above:left-aligned
-            above:centered
-            above:right-aligned
-            below:left-aligned
-            below:centered
-            below:right-aligned
+            centered:above
+            centered:below
+            left-aligned:above
+            left-aligned:below
+            right-aligned:above
+            right-aligned:below
 
             """
         }
